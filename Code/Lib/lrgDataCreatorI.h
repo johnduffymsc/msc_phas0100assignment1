@@ -19,10 +19,10 @@
 
 namespace lrg {
 
-    class DataCreatorI {
-        public:
-            virtual std::vector<std::pair<double, double>> GetData() = 0;
-    };
+  class DataCreatorI {
+  public:
+    virtual std::vector<std::pair<double, double>> GetData() = 0;
+  };
 
 } // end namespace
 

@@ -21,10 +21,11 @@
 
 namespace lrg
 {
-    class LinearDataCreator : public DataCreatorI {
-        public:
-            std::vector<std::pair<double, double>> GetData();
-    };
+  class LinearDataCreator : public DataCreatorI {
+  public:
+    std::vector<std::pair<double, double>> GetData();
+    std::vector<std::pair<double, double>> GetData(const int n);
+  };
 
 } // end namespace
 
