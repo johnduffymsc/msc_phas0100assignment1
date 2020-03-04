@@ -23,8 +23,13 @@ namespace lrg
 {
   class LinearDataCreator : public DataCreatorI {
   public:
+    LinearDataCreator();
+    LinearDataCreator(const double theta0, const double theta1);
     std::vector<std::pair<double, double>> GetData();
     std::vector<std::pair<double, double>> GetData(const int n);
+  private:
+    const double theta0_;
+    const double theta1_;
   };
 
 } // end namespace

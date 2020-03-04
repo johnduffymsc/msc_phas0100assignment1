@@ -19,13 +19,20 @@
 
 namespace lrg {
 
+  // Constructors.
+
+  LinearDataCreator::LinearDataCreator() : theta0_(0.0), theta1_(1.0) {};  // Default: y = x.
+  
+  LinearDataCreator::LinearDataCreator(const double theta0, const double theta1) : theta0_(theta0), theta1_(theta1) {};
+  
+  
   // LinearDataCreator::GetData()
   
   std::vector<std::pair<double, double>> LinearDataCreator::GetData() {
 
     // Create the vector to be returned from this function.
 
-    std::vector<std::pair<double, double>> data(10);
+    std::vector<std::pair<double, double>> data(10);  // Default: 10 data points.
 
     // Create a random noise generator from the normal distribution.
     
@@ -36,7 +43,7 @@ namespace lrg {
 
     for (int i = 0; i < data.size(); ++i) {
       data[i].first = i;
-      data[i].second = i;
+      data[i].second = theta0_ + theta1_ * i;
     }
     
     // Return the vector.
@@ -45,7 +52,8 @@ namespace lrg {
 
   }
 
-  // Overloaded LinearDataCreator::GetData(const int n)
+
+  // LinearDataCreator::GetData(const int n)
   
   std::vector<std::pair<double, double>> LinearDataCreator::GetData(const int n) {
 
@@ -62,7 +70,7 @@ namespace lrg {
 
     for (int i = 0; i < data.size(); ++i) {
       data[i].first = i;
-      data[i].second = i;
+      data[i].second = theta0_ + theta1_ * i;
     }
 
     // Return the vector.
