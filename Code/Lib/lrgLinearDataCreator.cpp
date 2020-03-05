@@ -17,11 +17,12 @@
 #include <vector>
 #include <random>
 
+
 namespace lrg {
 
   // Constructors.
 
-  LinearDataCreator::LinearDataCreator() : theta0_(0.0), theta1_(1.0) {};  // Default: y = x.
+  LinearDataCreator::LinearDataCreator() : theta0_(0.0), theta1_(1.0) {};
   
   LinearDataCreator::LinearDataCreator(const double theta0, const double theta1) : theta0_(theta0), theta1_(theta1) {};
   
@@ -32,18 +33,18 @@ namespace lrg {
 
     // Create the vector to be returned from this function.
 
-    std::vector<std::pair<double, double>> data(10);  // Default: 10 data points.
+    std::vector<std::pair<double, double>> data(10);
 
     // Create a random noise generator from the normal distribution.
     
     std::default_random_engine generator;
-    std::normal_distribution<double> distribution(1.0, 0.0);
+    std::normal_distribution<double> noise(0.0, 1.0);
 
     // Generate the data.
 
-    for (int i = 0; i < data.size(); ++i) {
-      data[i].first = i;
-      data[i].second = theta0_ + theta1_ * i;
+    for (int x = 0; x < data.size(); ++x) {
+      data[x].first = x;
+      data[x].second = theta1_ * x + theta0_ + noise(generator);
     }
     
     // Return the vector.
@@ -64,15 +65,15 @@ namespace lrg {
     // Create a random noise generator from the normal distribution.
     
     std::default_random_engine generator;
-    std::normal_distribution<double> distribution(1.0, 0.0);
+    std::normal_distribution<double> noise(0.0, 1.0);
 
     // Generate the data.
 
-    for (int i = 0; i < data.size(); ++i) {
-      data[i].first = i;
-      data[i].second = theta0_ + theta1_ * i;
+    for (int x = 0; x < data.size(); ++x) {
+      data[x].first = x;
+      data[x].second = theta1_ * x + theta0_ + noise(generator);
     }
-
+    
     // Return the vector.
 
     return data;
