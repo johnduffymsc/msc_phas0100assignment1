@@ -16,11 +16,12 @@
 #include "lrgCatchMain.h"
 #include "lrgLinearDataCreator.h"
 
+#include <fstream>
 #include <iostream>
 #include <typeinfo>
 
 
-// Test the default constructor does actually return an object of the correct type.
+// Test the default constructor does actually construct an object of the correct type.
 
 TEST_CASE("Test default constructor", "[LinearDataCreator]") {
   lrg::LinearDataCreator LinearDataCreatorInstance;
@@ -28,7 +29,7 @@ TEST_CASE("Test default constructor", "[LinearDataCreator]") {
 }
 
 
-// Test the non-default constructor does actually return an object of the correct type.
+// Test the non-default constructor does actually construct an object of the correct type.
 
 TEST_CASE("Test non-default constructor", "[LinearDataCreator]") {
   lrg::LinearDataCreator LinearDataCreatorInstance(1.0, 1.0);
@@ -56,6 +57,14 @@ TEST_CASE("Test GetData(20): y = 1.0 + 2.0 * x, for x in [0, 19]", "[LinearDataC
   lrg::LinearDataCreator LinearDataCreatorInstance(theta0, theta1);
   std::vector<std::pair<double, double>> data = LinearDataCreatorInstance.GetData(n);
   REQUIRE(data.size() == n);
+
+  std::fstream f;
+  f.open("GetData.txt", std::fstream::out);
+  for (auto item : data) {
+    f << item.first << " " << item.second << std::endl;
+  }
+  f.close();
+  
   //REQUIRE(data[0] == std::pair<double, double>(0.0, theta0));
   //REQUIRE(data[n - 1] == std::pair<double, double>(n - 1, theta0 + theta1 * (n - 1)));
 }

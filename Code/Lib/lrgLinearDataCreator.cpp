@@ -25,9 +25,14 @@ namespace lrg {
   LinearDataCreator::LinearDataCreator() : theta0_(0.0), theta1_(1.0) {};
   
   LinearDataCreator::LinearDataCreator(const double theta0, const double theta1) : theta0_(theta0), theta1_(theta1) {};
+
+
+  // Destructor.
+
+  LinearDataCreator::~LinearDataCreator() {};
   
   
-  // LinearDataCreator::GetData()
+  // LinearDataCreator::GetData().
   
   std::vector<std::pair<double, double>> LinearDataCreator::GetData() {
 
@@ -54,7 +59,7 @@ namespace lrg {
   }
 
 
-  // LinearDataCreator::GetData(const int n)
+  // LinearDataCreator::GetData(const int n).
   
   std::vector<std::pair<double, double>> LinearDataCreator::GetData(const int n) {
 

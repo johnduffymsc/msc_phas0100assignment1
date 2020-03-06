@@ -25,6 +25,7 @@ namespace lrg
   public:
     LinearDataCreator();
     LinearDataCreator(const double theta0, const double theta1);
+    ~LinearDataCreator();
     std::vector<std::pair<double, double>> GetData();
     std::vector<std::pair<double, double>> GetData(const int n);
   private:
