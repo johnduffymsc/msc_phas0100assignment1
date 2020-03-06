@@ -18,6 +18,7 @@ set(TMP_DIR ${CMAKE_BINARY_DIR}/Testing/Temporary)
 set(TEST_CASES
   lrgBasicTest
   lrgCommandLineArgsTest
+  lrgLeastSquaresSolverTests
 )
 
 foreach(_test_case ${TEST_CASES})
@@ -34,3 +35,5 @@ endforeach()
 
 add_test(NoArgs ${EXECUTABLE_OUTPUT_PATH}/lrgBasicTest)
 add_test(1File ${EXECUTABLE_OUTPUT_PATH}/lrgCommandLineArgsTest ${DATA_DIR}/input.txt)
+add_test(LinearDataCreator ${EXECUTABLE_OUTPUT_PATH}/lrgLeastSquaresSolverTests)
+
