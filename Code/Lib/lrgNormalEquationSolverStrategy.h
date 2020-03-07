@@ -19,16 +19,18 @@
 
 #include <vector>
 
+
 namespace lrg
 {
+  typedef std::pair<double, double> single_pair;
+  typedef std::vector<std::pair<double, double>> vector_of_pairs;
+  
   class NormalEquationSolverStrategy : public LinearModelSolverStrategyI {
   public:
-    // Constructor.
     NormalEquationSolverStrategy();
-    // Destructor.
     ~NormalEquationSolverStrategy();
-    // Methods.
-    std::pair<double, double> FitData(std::vector<std::pair<double, double>>);
+    //std::pair<double, double> FitData(std::vector<std::pair<double, double>>);
+    single_pair FitData(vector_of_pairs);
   };
 
 } // end namespace

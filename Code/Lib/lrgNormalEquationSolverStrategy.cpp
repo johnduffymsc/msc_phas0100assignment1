@@ -29,6 +29,6 @@ namespace lrg {
 
   // FitData().
   
-  std::pair<double, double> FitData(std::vector<std::pair<double, double>>) {};
+  single_pair NormalEquationSolverStrategy::FitData(vector_of_pairs) {};
 
 } // end namespace
