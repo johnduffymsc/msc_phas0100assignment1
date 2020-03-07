@@ -19,11 +19,13 @@ set(PHAS0100ASSIGNMENT1_LIBRARY_SRCS
   lrgMyFunctions.cpp
   lrgException.cpp
   lrgLinearDataCreator.cpp
+  lrgNormalEquationSolverStrategy.cpp
 )
 
 set(PHAS0100ASSIGNMENT1_LIBRARY_HDRS
   lrgExceptionMacro.h
   lrgDataCreatorI.h
+  lrgLinearModelSolverStrategyI.h
 )
 
 add_library(${PHAS0100ASSIGNMENT1_LIBRARY_NAME} ${PHAS0100ASSIGNMENT1_LIBRARY_HDRS} ${PHAS0100ASSIGNMENT1_LIBRARY_SRCS})
@@ -35,4 +37,3 @@ if(BUILD_SHARED_LIBS)
 endif(BUILD_SHARED_LIBS)
 
 target_link_libraries(${PHAS0100ASSIGNMENT1_LIBRARY_NAME} PRIVATE ${ALL_THIRD_PARTY_LIBRARIES})
-
