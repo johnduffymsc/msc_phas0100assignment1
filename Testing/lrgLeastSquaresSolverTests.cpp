@@ -82,6 +82,45 @@ TEST_CASE("Test GetData(20): y = 1.0 + 2.0 * x, for x in [0, 19]", "[LinearDataC
 // Test the default constructor does actually construct an object of the correct type.
 
 TEST_CASE("Test NormalEquationSolverStrategy default constructor", "[NormalEquationSolverStrategy]") {
-  lrg::NormalEquationSolverStrategy NormalEquationSolverStrategyInstance;
-  REQUIRE(typeid(NormalEquationSolverStrategyInstance) == typeid(lrg::NormalEquationSolverStrategy));
+  lrg::NormalEquationSolverStrategy Solver;
+  REQUIRE(typeid(Solver) == typeid(lrg::NormalEquationSolverStrategy));
+}
+
+
+// TODO(John): Test below for data vector length < 2.
+
+
+// Basic test of fitting 2 points on the line y = x.
+
+TEST_CASE("Test NormalEquationSolverStrategy y = x, for x in [0, 1]", "[NormalEquationSolverStrategy]") {
+  lrg::vector_of_pairs data {lrg::single_pair(0.0, 0.0), lrg::single_pair(1.0, 1.0)};
+  lrg::NormalEquationSolverStrategy Solver;
+  lrg::single_pair theta = Solver.FitData(data);
+  // Test for required output being careful of floating point comparisons.
+  REQUIRE(round(theta.first) == 0.0);
+  REQUIRE(round(theta.second) == 1.0);
+}
+
+
+// Basic test of fitting 3 points on the line y = x.
+
+TEST_CASE("Test NormalEquationSolverStrategy y = x, for x in [0, 2]", "[NormalEquationSolverStrategy]") {
+  lrg::vector_of_pairs data {lrg::single_pair(0.0, 0.0), lrg::single_pair(1.0, 1.0), lrg::single_pair(2.0, 2.0)};
+  lrg::NormalEquationSolverStrategy Solver;
+  lrg::single_pair theta = Solver.FitData(data);
+  // Test for required output being careful of floating point comparisons.
+  REQUIRE(round(theta.first) == 0.0);
+  REQUIRE(round(theta.second) == 1.0);
+}
+
+
+// Test fitting the line y = 2 from 3 data points not on the line.
+
+TEST_CASE("Test NormalEquationSolverStrategy y = 2, from 3 data points", "[NormalEquationSolverStrategy]") {
+  lrg::vector_of_pairs data {lrg::single_pair(0.0, 1.0), lrg::single_pair(1.0, 3.0), lrg::single_pair(2.0, 1.0)};
+  lrg::NormalEquationSolverStrategy Solver;
+  lrg::single_pair theta = Solver.FitData(data);
+  // Test for required output being careful of floating point comparisons.
+  REQUIRE(round(theta.first) == 2.0);
+  REQUIRE(round(theta.second) == 0.0);
 }
