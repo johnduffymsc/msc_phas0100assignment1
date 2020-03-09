@@ -16,6 +16,9 @@
 #include <lrgExceptionMacro.h>
 #include <iostream>
 
+// CLI11 header-only library.
+#include <CLI/CLI.hpp>
+
 // Example, header-only library, included in project for simplicity's sake.
 #include <Eigen/Dense>
 #include <unsupported/Eigen/NonLinearOptimization>
