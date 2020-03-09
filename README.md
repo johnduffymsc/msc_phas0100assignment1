@@ -1,7 +1,23 @@
 PHAS0100Assignment1
 ------------------
 
+## TestData1.txt
+
+### CLI Output
+
+![TestData1.txt](CLIScreenshotTestData1.png)
+
+### Gnuplot Output
+
 ![TestData1.txt](LeastSquaresSolver_TestData1.png)
+
+## TestData2.txt
+
+### CLI Output
+
+![TestData2.txt](CLIScreenshotTestData2.png)
+
+### Gnuplot Output
 
 ![TestData2.txt](LeastSquaresSolver_TestData2.png)
 
