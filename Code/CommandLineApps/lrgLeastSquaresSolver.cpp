@@ -19,8 +19,18 @@
 #include <iostream>
 
 
-int main(int argc, char *argv[])
+int main(int argc, char** argv)
 {
+  CLI::App app{"A program to perform Linear Regression."};
+
+  std::string filename = "";
+  CLI::Option *filename_option = app.add_option("-f,--file", filename, "Data file");
+  filename_option->check(CLI::ExistingFile);
+  filename_option->required();
+  
+  CLI11_PARSE(app, argc, argv);
+
+
   try
   {
     std::cout << "Hello..." << std::endl;
