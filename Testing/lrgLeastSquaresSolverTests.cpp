@@ -15,6 +15,7 @@
 #include "catch.hpp"
 #include "lrgCatchMain.h"
 #include "lrgLinearDataCreator.h"
+#include "lrgFileLoaderDataCreator.h"
 #include "lrgNormalEquationSolverStrategy.h"
 
 #include <fstream>
@@ -76,14 +77,44 @@ TEST_CASE("Test GetData(20): y = 1.0 + 2.0 * x, for x in [0, 19]", "[LinearDataC
 
 
 //
+// File Loader Data Creator Tests.
+//
+
+// Test the default constructor does actually construct an object of the correct type.
+
+TEST_CASE("Test FileLoaderDataCreator default constructor", "[FileLoaderDataCreator]") {
+  lrg::FileLoaderDataCreator creator;
+  REQUIRE(typeid(creator) == typeid(lrg::FileLoaderDataCreator));
+}
+
+
+// Test loading TestData1.txt.
+
+TEST_CASE("Test loading TestData1.txt", "[FileLoaderDataCreator]") {
+  lrg::FileLoaderDataCreator creator("TestData1.txt");
+  lrg::vector_of_pairs v = creator.GetData();
+  REQUIRE(v.size() == 1000);
+}
+
+
+// Test loading TestData2.txt.
+
+TEST_CASE("Test loading TestData2.txt", "[FileLoaderDataCreator]") {
+  lrg::FileLoaderDataCreator creator("TestData2.txt");
+  lrg::vector_of_pairs v = creator.GetData();
+  REQUIRE(v.size() == 1000);
+}
+
+
+//
 // Normal Equation Solver Strategy Tests.
 //
 
 // Test the default constructor does actually construct an object of the correct type.
 
 TEST_CASE("Test NormalEquationSolverStrategy default constructor", "[NormalEquationSolverStrategy]") {
-  lrg::NormalEquationSolverStrategy Solver;
-  REQUIRE(typeid(Solver) == typeid(lrg::NormalEquationSolverStrategy));
+  lrg::NormalEquationSolverStrategy solver;
+  REQUIRE(typeid(solver) == typeid(lrg::NormalEquationSolverStrategy));
 }
 
 
