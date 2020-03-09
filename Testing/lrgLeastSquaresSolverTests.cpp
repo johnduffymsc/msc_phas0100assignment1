@@ -113,8 +113,8 @@ TEST_CASE("Test loading TestData2.txt", "[FileLoaderDataCreator]") {
 // Test the default constructor does actually construct an object of the correct type.
 
 TEST_CASE("Test NormalEquationSolverStrategy default constructor", "[NormalEquationSolverStrategy]") {
-  lrg::NormalEquationSolverStrategy Solver;
-  REQUIRE(typeid(Solver) == typeid(lrg::NormalEquationSolverStrategy));
+  lrg::NormalEquationSolverStrategy solver;
+  REQUIRE(typeid(solver) == typeid(lrg::NormalEquationSolverStrategy));
 }
 
 
