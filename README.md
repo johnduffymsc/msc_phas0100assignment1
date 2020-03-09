@@ -1,6 +1,11 @@
 PHAS0100Assignment1
 ------------------
 
+![TestData1.txt](LeastSquaresSolver_TestData1.png)
+
+![TestData2.txt](LeastSquaresSolver_TestData2.png)
+
+
 [![Build Status](https://travis-ci.com/MattClarkson/PHAS0100Assignment1.svg?branch=master)](https://travis-ci.com/MattClarkson/PHAS0100Assignment1)
 [![Build Status](https://ci.appveyor.com/api/projects/status/5pm89ej732c1ekf0/branch/master)](https://ci.appveyor.com/project/MattClarkson/cmakecatch2)
 

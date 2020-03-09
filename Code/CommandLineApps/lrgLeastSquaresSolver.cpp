@@ -73,15 +73,34 @@ int main(int argc, char** argv)
 
 
   //
-  // Results.
+  // Print result.
   //
-  
-  for (auto p : data) {
-    std::cout << p.first << " " << p.second << std::endl;
-  }
 
   std::cout << "theta0: " << theta.first << std::endl;
   std::cout << "theta1: " << theta.second << std::endl;
+
+  // Produce Gnuplot script.
+  
+  try {
+    std::fstream f ("LeastSquaresSolver.plt", std::fstream::out);
+    f << "set title " << "'Linear Regression of " << filename << "'" << std::endl;
+    f << "set terminal png size 1920,1080" << std::endl;
+    f << "set output " << "'LeastSquaresSolver.png'" << std::endl; 
+    f << "set grid" << std::endl;
+    f << "set xlabel 'x'" << std::endl;
+    f << "set ylabel 'y'" << std::endl;
+    f << "f(x) = theta0 + theta1 * x" << std::endl;
+    f << "theta0 = " << theta.first << std::endl;
+    f << "theta1 = " << theta.second << std::endl;
+    f << "plot '-' using 1:2 with points title 'Data', f(x) with lines title 'Regression Line'" << std::endl;
+    for (auto p : data) {
+      f  << p.first << " " << p.second << std::endl;
+    }
+    f << "e" << std::endl;
+  } catch (...) {
+    // TODO(John): Improve below.
+    std::cout << "Caught Exception!." << std::endl;
+  }
 
 
   //
