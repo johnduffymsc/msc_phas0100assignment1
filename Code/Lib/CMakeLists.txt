@@ -19,6 +19,7 @@ set(PHAS0100ASSIGNMENT1_LIBRARY_SRCS
   lrgMyFunctions.cpp
   lrgException.cpp
   lrgLinearDataCreator.cpp
+  lrgFileLoaderDataCreator.cpp
   lrgNormalEquationSolverStrategy.cpp
 )
 

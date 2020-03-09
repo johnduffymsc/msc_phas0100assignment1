@@ -15,6 +15,7 @@
 #include "catch.hpp"
 #include "lrgCatchMain.h"
 #include "lrgLinearDataCreator.h"
+#include "lrgFileLoaderDataCreator.h"
 #include "lrgNormalEquationSolverStrategy.h"
 
 #include <fstream>
@@ -72,6 +73,38 @@ TEST_CASE("Test GetData(20): y = 1.0 + 2.0 * x, for x in [0, 19]", "[LinearDataC
   
   //REQUIRE(data[0] == std::pair<double, double>(0.0, theta0));
   //REQUIRE(data[n - 1] == std::pair<double, double>(n - 1, theta0 + theta1 * (n - 1)));
+}
+
+
+//
+// File Loader Data Creator Tests.
+//
+
+// Test the default constructor does actually construct an object of the correct type.
+
+TEST_CASE("Test FileLoaderDataCreator default constructor", "[FileLoaderDataCreator]") {
+  lrg::FileLoaderDataCreator creator;
+  REQUIRE(typeid(creator) == typeid(lrg::FileLoaderDataCreator));
+}
+
+
+// Test loading TestData1.txt.
+
+TEST_CASE("Test loading TestData1.txt", "[FileLoaderDataCreator]") {
+  // TODO(John): Make this path relative to the CMake source directory.
+  lrg::FileLoaderDataCreator creator("/home/john/Documents/coursework1/19154676/PHAS0100Assignment1/Data/TestData1.txt");
+  lrg::vector_of_pairs v = creator.GetData();
+  REQUIRE(v.size() == 1000);
+}
+
+
+// Test loading TestData2.txt.
+
+TEST_CASE("Test loading TestData2.txt", "[FileLoaderDataCreator]") {
+  // TODO(John): Make this path relative to the CMake source directory.
+  lrg::FileLoaderDataCreator creator("/home/john/Documents/coursework1/19154676/PHAS0100Assignment1/Data/TestData2.txt");
+  lrg::vector_of_pairs v = creator.GetData();
+  REQUIRE(v.size() == 1000);
 }
 
 
