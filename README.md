@@ -55,7 +55,13 @@ cmake ../PHAS0100Assignment1
 make
 ```
 
-The assignment executable will be in the PHAS0100Assignment1-Build/bin directory.
+The executable, lrgLeastSquaresSolver, will be in the PHAS0100Assignment1-Build/bin directory.
+
+In addition to displaying the values of theta0 and theta1 from the Linear Regression, the executble also produces a Gnuplot script which can be used to produce a png plot of input data and the resultant regression line. It is not necessary to install Gnuplot to produce the script, only to produce the png plot. To install Gnuplot (on Ubuntu 18.04):
+
+```
+sudo apt install gnuplot
+```
 
 Useage
 ------
@@ -77,3 +83,12 @@ Options:
   -s,--solver TEXT:{normal_equations,gradient_descent} REQUIRED
                               Solver to perform linear regression.
 ```
+
+
+The executable will automatically produce a Gnuplot script in the directory the executable was run from. To produce a png plot of the input data and resultant regression line from this script:
+
+```
+gnuplot LeastSquaresSolver.plt
+```
+
+This will produce LeastSquaresSolver.png in the same directory.
