@@ -40,19 +40,40 @@ This project was developed as a teaching aid for UCL's ["Research Computing with
 course developed by [Dr. James Hetherington](http://www.ucl.ac.uk/research-it-services/people/james)
 and [Dr. Matt Clarkson](https://iris.ucl.ac.uk/iris/browse/profile?upi=MJCLA42).
 
-Build Instructions
-------------------
+Installation and Build Instructions
+-----------------------------------
 
-This project itself can be built if you just want to test it. In Linux terms that
-would be:
-``` cmake
-git clone https://github.com/MattClarkson/PHAS0100Assignment1
+This assignment has been submitted as a zip file, as required by the assignment instructions. To install from the zip file...
+
+Additionally, this assignment can be built from a private GitHub respository. The repository is private to prevent plagiarism, again, as required by the assignment instructions. To obtain the username and password for this repository please contact [John Duffy](mailto:john.duffy.19@ucl.ac.uk). To build from this repository:
+
+```
+git clone https://github.com/johnduffymsc/PHAS0100Assignment1.git
 mkdir PHAS0100Assignment1-Build
 cd PHAS0100Assignment1-Build
 cmake ../PHAS0100Assignment1
 make
 ```
-But ideally, you should use this as a template to create your own project. To do so,
-please refer to the [CMakeTemplateRenamer](https://github.com/MattClarkson/CMakeTemplateRenamer)
-which will show you how to clone this repository, and rename all the variables to names of your choice.
-Then you would simply build your new project, using cmake, as shown above.
+
+The assignment executable will be in the PHAS0100Assignment1-Build/bin directory.
+
+Useage
+------
+
+From the PHAS0100Assignment1-Build directory:
+
+```
+bin/lrgLeastSquaresSolver --help
+```
+yields the following:
+```
+A program to perform Linear Regression.
+Usage: bin/lrgLeastSquaresSolver [OPTIONS]
+
+Options:
+  -h,--help                   Print this help message and exit
+  -f,--file TEXT:FILE REQUIRED
+                              Data file, space separated X and y pairs, one pair per line.
+  -s,--solver TEXT:{normal_equations,gradient_descent} REQUIRED
+                              Solver to perform linear regression.
+```
