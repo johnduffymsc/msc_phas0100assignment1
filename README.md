@@ -22,23 +22,20 @@ PHAS0100Assignment1
 ![TestData2.txt](LeastSquaresSolver_TestData2.png)
 
 
-[![Build Status](https://travis-ci.com/MattClarkson/PHAS0100Assignment1.svg?branch=master)](https://travis-ci.com/MattClarkson/PHAS0100Assignment1)
-[![Build Status](https://ci.appveyor.com/api/projects/status/5pm89ej732c1ekf0/branch/master)](https://ci.appveyor.com/project/MattClarkson/cmakecatch2)
-
-
 Purpose
 -------
+Coursework 1 by John Duffy for PHAS0100 Research Computing with C++ 2019/2020 at UCL.
 
-This is a demo project to demonstrate a reasonable folder structure for [CMake](https://cmake.org/) based projects,
-that use [CTest](https://cmake.org/) to run unit tests via [Catch](https://github.com/catchorg/Catch2).
+A command line interface program to perform Linear Regression.
 
+Data is supplied from a data file via the --file option, or randomly generated if the --file option is not given. The data file format is a space delimited 'x y' pair, one pair on each line. In the absence of the --file option, linear data is generated with user specified intercept and gradient values, together with the mean and and standard deviation of random noise which is applied to the linear data.
 
-Credits
--------
+The method used to solve the linear regression is one of 'normal_equations' or 'gradient_descent', which is selected via the --solver option.
 
-This project was developed as a teaching aid for UCL's ["Research Computing with C++"](http://rits.github-pages.ucl.ac.uk/research-computing-with-cpp/)
-course developed by [Dr. James Hetherington](http://www.ucl.ac.uk/research-it-services/people/james)
-and [Dr. Matt Clarkson](https://iris.ucl.ac.uk/iris/browse/profile?upi=MJCLA42).
+The program returns the intercept and gradient of the linear regression.
+
+Additionally, the program generates a Gnuplot script which can be used with Gnuplot to generate a PNG plot of the data and resultant regression line.
+
 
 Installation and Build Instructions
 -----------------------------------
@@ -83,7 +80,6 @@ Options:
   -s,--solver TEXT:{normal_equations,gradient_descent} REQUIRED
                               Solver to perform linear regression.
 ```
-
 
 The executable will automatically produce a Gnuplot script in the directory the executable was run from. To produce a png plot of the input data and resultant regression line from this script:
 
