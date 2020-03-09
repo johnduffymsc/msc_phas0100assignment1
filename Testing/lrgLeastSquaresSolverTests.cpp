@@ -91,8 +91,7 @@ TEST_CASE("Test FileLoaderDataCreator default constructor", "[FileLoaderDataCrea
 // Test loading TestData1.txt.
 
 TEST_CASE("Test loading TestData1.txt", "[FileLoaderDataCreator]") {
-  // TODO(John): Make this path relative to the CMake source directory.
-  lrg::FileLoaderDataCreator creator("/home/john/Documents/coursework1/19154676/PHAS0100Assignment1/Data/TestData1.txt");
+  lrg::FileLoaderDataCreator creator("TestData1.txt");
   lrg::vector_of_pairs v = creator.GetData();
   REQUIRE(v.size() == 1000);
 }
@@ -101,8 +100,7 @@ TEST_CASE("Test loading TestData1.txt", "[FileLoaderDataCreator]") {
 // Test loading TestData2.txt.
 
 TEST_CASE("Test loading TestData2.txt", "[FileLoaderDataCreator]") {
-  // TODO(John): Make this path relative to the CMake source directory.
-  lrg::FileLoaderDataCreator creator("/home/john/Documents/coursework1/19154676/PHAS0100Assignment1/Data/TestData2.txt");
+  lrg::FileLoaderDataCreator creator("TestData2.txt");
   lrg::vector_of_pairs v = creator.GetData();
   REQUIRE(v.size() == 1000);
 }
