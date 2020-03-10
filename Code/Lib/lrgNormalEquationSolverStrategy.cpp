@@ -16,8 +16,6 @@
 
 #include "Eigen/Dense"
 
-#include <vector>
-
 
 namespace lrg {
 

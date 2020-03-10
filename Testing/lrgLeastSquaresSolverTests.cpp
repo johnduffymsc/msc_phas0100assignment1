@@ -17,6 +17,7 @@
 #include "lrgLinearDataCreator.h"
 #include "lrgFileLoaderDataCreator.h"
 #include "lrgNormalEquationSolverStrategy.h"
+#include "lrgGradientDescentSolverStrategy.h"
 
 #include <fstream>
 #include <iostream>
@@ -47,7 +48,7 @@ TEST_CASE("Test LinearDataCreator non-default constructor", "[LinearDataCreator]
 
 TEST_CASE("Test GetData(): Default y = x, for x in [0, 9]", "[LinearDataCreator]") {
   lrg::LinearDataCreator LinearDataCreatorInstance;
-  std::vector<std::pair<double, double>> data = LinearDataCreatorInstance.GetData();
+  lrg::vector_of_pairs data = LinearDataCreatorInstance.GetData();
   REQUIRE(data.size() == 10);
   //REQUIRE(data[0] == std::pair<double, double>(0.0, 0.0));
   //REQUIRE(data[9] == std::pair<double, double>(9.0, 9.0));
@@ -61,7 +62,7 @@ TEST_CASE("Test GetData(20): y = 1.0 + 2.0 * x, for x in [0, 19]", "[LinearDataC
   const double theta1 = 2.0;
   const int n = 20;
   lrg::LinearDataCreator LinearDataCreatorInstance(theta0, theta1);
-  std::vector<std::pair<double, double>> data = LinearDataCreatorInstance.GetData(n);
+  lrg::vector_of_pairs data = LinearDataCreatorInstance.GetData(n);
   REQUIRE(data.size() == n);
 
   std::fstream f;
@@ -154,4 +155,86 @@ TEST_CASE("Test NormalEquationSolverStrategy y = 2, from 3 data points", "[Norma
   // Test for required output being careful of floating point comparisons.
   REQUIRE(round(theta.first) == 2.0);
   REQUIRE(round(theta.second) == 0.0);
+}
+
+
+//
+// Gradient Descent Solver Strategy Tests.
+//
+
+
+// Test the constructor does actually construct an object of the correct type.
+
+TEST_CASE("Test GradientDescentSolverStrategy constructor", "[GradientDescentSolverStrategy]") {
+
+  // Create solver instance.
+
+  lrg::single_pair theta_zero (5.0, 5.0);
+  const int max_iterations = 1000;
+  const double eta = 0.1;
+  
+  lrg::GradientDescentSolverStrategy solver(theta_zero, max_iterations, eta);
+
+  // Test for the correct type.
+  
+  REQUIRE(typeid(solver) == typeid(lrg::GradientDescentSolverStrategy));
+
+}
+
+
+// Test solving for TestData1.txt.
+
+TEST_CASE("Test GradientDescentSolverStrategy for TestData1.txt", "[GradientDescentSolverStrategy]") {
+
+  // Get the data (this has previously been tested).
+
+  lrg::FileLoaderDataCreator creator("TestData1.txt");
+  lrg::vector_of_pairs data = creator.GetData();
+
+  // Create solver instance.
+
+  const lrg::single_pair theta_zero(5.0, 5.0);
+  const int max_iterations = 1000;
+  const double eta = 0.1;
+
+  lrg::GradientDescentSolverStrategy solver(theta_zero, max_iterations, eta);
+
+  // Solve.
+
+  lrg::single_pair theta = solver.FitData(data);
+
+  // Test for required output being careful of floating point comparisons.
+  
+  REQUIRE(round(theta.first) == 3.0);
+  REQUIRE(round(theta.second) == 2.0);
+
+}
+
+
+// Test solving for TestData2.txt.
+
+TEST_CASE("Test GradientDescentSolverStrategy for TestData1.2xt", "[GradientDescentSolverStrategy]") {
+
+  // Get the data (this has previously been tested).
+
+  lrg::FileLoaderDataCreator creator("TestData2.txt");
+  lrg::vector_of_pairs data = creator.GetData();
+
+  // Create solver instance.
+
+  const lrg::single_pair theta_zero(5.0, 5.0);
+  const int max_iterations = 1000;
+  const double eta = 0.1;
+
+  lrg::GradientDescentSolverStrategy solver(theta_zero, max_iterations, eta);
+
+  // Solve.
+
+  lrg::single_pair theta = solver.FitData(data);
+
+  // Test for required output being careful of floating point comparisons.
+  
+  REQUIRE(round(theta.first) == 2.0);
+  REQUIRE(round(theta.second) == 3.0);
+
 }

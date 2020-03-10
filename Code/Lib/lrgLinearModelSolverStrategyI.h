@@ -15,13 +15,14 @@
 #ifndef lrgLinearModelSolverStrategyI_h
 #define lrgLinearModelSolverStrategyI_h
 
-#include <vector>
+#include "lrgBasicTypes.h"
+
 
 namespace lrg {
 
   class LinearModelSolverStrategyI {
   public:
-    virtual std::pair<double, double> FitData(std::vector<std::pair<double, double>>) = 0;
+    virtual single_pair FitData(vector_of_pairs) = 0;
   };
 
 } // end namespace
