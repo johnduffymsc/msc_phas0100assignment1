@@ -22,11 +22,14 @@ namespace lrg {
 
   class GradientDescentSolverStrategy : public LinearModelSolverStrategyI {
   public:
-    GradientDescentSolverStrategy();
-    ~GradientDescentSolverStrategy();
+    GradientDescentSolverStrategy(const single_pair theta_zero, const int max_iterations, const double eta);
     single_pair FitData(vector_of_pairs);
+  private:
+    const single_pair theta_zero_;
+    const int max_iterations_;
+    const double eta_;
   };
-
+  
 } // end namespace
 
 #endif

@@ -18,7 +18,7 @@
 
 
 namespace lrg {
-
+  
   // Constructors.
 
   LinearDataCreator::LinearDataCreator() : theta0_(0.0), theta1_(1.0) {};
