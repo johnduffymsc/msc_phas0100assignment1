@@ -23,7 +23,6 @@ namespace lrg {
   class NormalEquationSolverStrategy : public LinearModelSolverStrategyI {
   public:
     NormalEquationSolverStrategy();
-    ~NormalEquationSolverStrategy();
     single_pair FitData(vector_of_pairs);
   };
 

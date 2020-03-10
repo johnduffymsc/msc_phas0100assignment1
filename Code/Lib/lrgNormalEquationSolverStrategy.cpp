@@ -19,25 +19,10 @@
 
 namespace lrg {
 
-  // Constructor.
+  NormalEquationSolverStrategy::NormalEquationSolverStrategy() {}
 
-  NormalEquationSolverStrategy::NormalEquationSolverStrategy() {};
-  
-
-  // Destructor.
-
-  NormalEquationSolverStrategy::~NormalEquationSolverStrategy() {};
-
-
-  // FitData().
   
   single_pair NormalEquationSolverStrategy::FitData(vector_of_pairs v) {
-
-    // Test vector size >= 2.
-
-
-    // Test typeid of pair types.
-
 
     // Copy the STL vector of pairs input data to an Eigen matrix X and vector y. 
 
@@ -50,13 +35,11 @@ namespace lrg {
       y(i) = v[i].second;
     }
 
-
     // Solve the normal equations.
 
     Eigen::VectorXd theta(2);
 
     theta = (X.transpose() * X).ldlt().solve(X.transpose() * y);
-
 
     // Return theta as an STL pair.
 
@@ -64,6 +47,6 @@ namespace lrg {
 
     return p;
     
-  };
+  }
 
 } // end namespace
