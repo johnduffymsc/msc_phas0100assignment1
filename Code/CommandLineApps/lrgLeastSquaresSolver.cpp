@@ -29,10 +29,10 @@ int main(int argc, char** argv)
   // Parse the command line arguments.
   //
   
-  CLI::App app{"A command line interface program to perform Linear Regression. Data is supplied from a data file via the --file option, or randomly generated if the --file option is not given. The data file format is a space delimited 'x y' pair, one pair on each line. In the absence of the --file option, linear data is generated with user specified intercept and gradient values, together with the mean and and standard deviation of random noise which is applied to the linear data. The method used to solve the linear regression is one of 'normal_equations' or 'gradient_descent', which is selected via the --solver option. The program returns the intercept and gradient of the linear regression. Additionally, the program generates a Gnuplot script which can be used with Gnuplot to generate a PNG plot of the data and resultant regression line."};
+  CLI::App app{"A program to perform Linear Regression."};
 
   std::string filename = "";
-  CLI::Option *filename_option = app.add_option("-f,--file", filename, "Data file, space separated X and y pairs, one pair per line.");
+  CLI::Option *filename_option = app.add_option("-f,--file", filename, "Data file, space delimited x and y pairs, one pair per line.");
   filename_option->check(CLI::ExistingFile);
   filename_option->required();
   
@@ -92,7 +92,12 @@ int main(int argc, char** argv)
   }
   else {
     // Gradient Descent Solver.
-    ;
+    // TODO: Parameterise the below...
+    const lrg::single_pair theta_zero (5.0, 5.0);
+    const int max_iterations = 1000;
+    const double eta = 0.1;
+    lrg::GradientDescentSolverStrategy solver_strategy(theta_zero, max_iterations, eta);
+    theta = solver_strategy.FitData(data);
   }
   
 

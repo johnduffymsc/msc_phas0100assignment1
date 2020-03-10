@@ -40,7 +40,22 @@ Additionally, the program generates a Gnuplot script which can be used with Gnup
 Installation and Build Instructions
 -----------------------------------
 
-This assignment has been submitted as a zip file, as required by the assignment instructions. To install from the zip file...
+This assignment has been submitted as a zip file, as required by the assignment instructions. To install from the zip file:
+
+```
+unzip 19154676.zip
+cd 19154676
+mkdir PHAS0100Assignment1-Build
+cd PHAS0100Assignment1-Build
+cmake ../PHAS0100Assignment1
+make
+```
+To run the tests:
+```
+ctest -V
+```
+The executable, lrgLeastSquaresSolver, will be in the PHAS0100Assignment1-Build/bin directory.
+
 
 Additionally, this assignment can be built from a private GitHub respository. The repository is private to prevent plagiarism, again, as required by the assignment instructions. To obtain the username and password for this repository please contact [John Duffy](mailto:john.duffy.19@ucl.ac.uk). To build from this repository:
 
@@ -51,7 +66,10 @@ cd PHAS0100Assignment1-Build
 cmake ../PHAS0100Assignment1
 make
 ```
-
+To run the tests:
+```
+ctest -V
+```
 The executable, lrgLeastSquaresSolver, will be in the PHAS0100Assignment1-Build/bin directory.
 
 In addition to displaying the values of theta0 and theta1 from the Linear Regression, the executble also produces a Gnuplot script which can be used to produce a png plot of input data and the resultant regression line. It is not necessary to install Gnuplot to produce the script, only to produce the png plot. To install Gnuplot (on Ubuntu 18.04):
