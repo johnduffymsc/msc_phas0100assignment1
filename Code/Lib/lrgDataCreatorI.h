@@ -15,13 +15,14 @@
 #ifndef lrgDataCreatorI_h
 #define lrgDataCreatorI_h
 
-#include <vector>
+#include "lrgBasicTypes.h"
+
 
 namespace lrg {
 
   class DataCreatorI {
   public:
-    virtual std::vector<std::pair<double, double>> GetData() = 0;
+    virtual vector_of_pairs GetData() = 0;
   };
 
 } // end namespace

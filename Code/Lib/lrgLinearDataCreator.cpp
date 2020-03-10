@@ -14,7 +14,6 @@
 
 #include "lrgLinearDataCreator.h"
 
-#include <vector>
 #include <random>
 
 
@@ -34,11 +33,11 @@ namespace lrg {
   
   // LinearDataCreator::GetData().
   
-  std::vector<std::pair<double, double>> LinearDataCreator::GetData() {
+  vector_of_pairs LinearDataCreator::GetData() {
 
     // Create the vector to be returned from this function.
 
-    std::vector<std::pair<double, double>> data(10);
+    vector_of_pairs  data (10);
 
     // Create a random noise generator from the normal distribution.
     
@@ -61,11 +60,11 @@ namespace lrg {
 
   // LinearDataCreator::GetData(const int n).
   
-  std::vector<std::pair<double, double>> LinearDataCreator::GetData(const int n) {
+  vector_of_pairs LinearDataCreator::GetData(const int n) {
 
     // Create the vector to be returned from this function.
 
-    std::vector<std::pair<double, double>> data(n);
+    vector_of_pairs data (n);
 
     // Create a random noise generator from the normal distribution.
     

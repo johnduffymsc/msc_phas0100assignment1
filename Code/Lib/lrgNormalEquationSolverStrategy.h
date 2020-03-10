@@ -17,19 +17,13 @@
 
 #include "lrgLinearModelSolverStrategyI.h"
 
-#include <vector>
 
-
-namespace lrg
-{
-  typedef std::pair<double, double> single_pair;
-  typedef std::vector<std::pair<double, double>> vector_of_pairs;
+namespace lrg {
   
   class NormalEquationSolverStrategy : public LinearModelSolverStrategyI {
   public:
     NormalEquationSolverStrategy();
     ~NormalEquationSolverStrategy();
-    //std::pair<double, double> FitData(std::vector<std::pair<double, double>>);
     single_pair FitData(vector_of_pairs);
   };
 

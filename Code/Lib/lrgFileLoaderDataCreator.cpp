@@ -16,7 +16,6 @@
 
 #include <fstream>
 #include <string>
-#include <vector>
 
 
 namespace lrg {
@@ -27,10 +26,10 @@ namespace lrg {
   
   FileLoaderDataCreator::~FileLoaderDataCreator() {};
   
-  std::vector<std::pair<double, double>> FileLoaderDataCreator::GetData()
+  vector_of_pairs FileLoaderDataCreator::GetData()
   {
-    std::vector<std::pair<double, double>> v;
-    std::pair<double, double> p;
+    vector_of_pairs v;
+    single_pair p;
 
     try {
       std::fstream f (filename_, std::fstream::in);

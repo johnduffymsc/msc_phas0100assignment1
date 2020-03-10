@@ -18,17 +18,16 @@
 #include "lrgDataCreatorI.h"
 
 #include <string>
-#include <vector>
 
 
-namespace lrg
-{
+namespace lrg {
+  
   class FileLoaderDataCreator : public DataCreatorI {
   public:
     FileLoaderDataCreator();
     FileLoaderDataCreator(const std::string filename);
     ~FileLoaderDataCreator();
-    std::vector<std::pair<double, double>> GetData();
+    vector_of_pairs GetData();
   private:
     const std::string filename_;
   };

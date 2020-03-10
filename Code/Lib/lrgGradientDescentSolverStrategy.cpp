@@ -12,28 +12,26 @@
 
 =============================================================================*/
 
-#include "lrgNormalEquationSolverStrategy.h"
+#include "lrgGradientDescentSolverStrategy.h"
 
 #include "Eigen/Dense"
-
-#include <vector>
 
 
 namespace lrg {
 
   // Constructor.
 
-  NormalEquationSolverStrategy::NormalEquationSolverStrategy() {};
+  GradientDescentSolverStrategy::GradientDescentSolverStrategy() {};
   
 
   // Destructor.
 
-  NormalEquationSolverStrategy::~NormalEquationSolverStrategy() {};
+  GradientDescentSolverStrategy::~GradientDescentSolverStrategy() {};
 
 
   // FitData().
   
-  single_pair NormalEquationSolverStrategy::FitData(vector_of_pairs v) {
+  single_pair GradientDescentSolverStrategy::FitData(vector_of_pairs v) {
 
     // Test vector size >= 2.
 

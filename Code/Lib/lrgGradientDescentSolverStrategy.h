@@ -12,24 +12,18 @@
 
 =============================================================================*/
 
-#ifndef lrgNormalEquationSolverStrategy_h
-#define lrgNormalEquationSolverStrategy_h
+#ifndef lrgGradientDescentSolverStrategy_h
+#define lrgGradientDescentSolverStrategy_h
 
 #include "lrgLinearModelSolverStrategyI.h"
 
-#include <vector>
 
+namespace lrg {
 
-namespace lrg
-{
-  typedef std::pair<double, double> single_pair;
-  typedef std::vector<std::pair<double, double>> vector_of_pairs;
-  
-  class NormalEquationSolverStrategy : public LinearModelSolverStrategyI {
+  class GradientDescentSolverStrategy : public LinearModelSolverStrategyI {
   public:
-    NormalEquationSolverStrategy();
-    ~NormalEquationSolverStrategy();
-    //std::pair<double, double> FitData(std::vector<std::pair<double, double>>);
+    GradientDescentSolverStrategy();
+    ~GradientDescentSolverStrategy();
     single_pair FitData(vector_of_pairs);
   };
 

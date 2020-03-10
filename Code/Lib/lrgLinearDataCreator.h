@@ -17,17 +17,16 @@
 
 #include "lrgDataCreatorI.h"
 
-#include <vector>
 
-namespace lrg
-{
+namespace lrg {
+  
   class LinearDataCreator : public DataCreatorI {
   public:
     LinearDataCreator();
     LinearDataCreator(const double theta0, const double theta1);
     ~LinearDataCreator();
-    std::vector<std::pair<double, double>> GetData();
-    std::vector<std::pair<double, double>> GetData(const int n);
+    vector_of_pairs GetData();
+    vector_of_pairs GetData(const int n);
   private:
     const double theta0_;
     const double theta1_;

@@ -17,6 +17,10 @@
 
 #include "lrgWin32ExportHeader.h"
 
+#include <vector>
+#include <utility>
+
+
 /**
 * \defgroup internal internal
 * \brief Internal stuff, not for end-users.
@@ -43,9 +47,12 @@
 * \ingroup types
 */
 
-//! Single namespace for all code in this package
+// Single namespace for all code in this package.
 namespace lrg
 {
+  
+  typedef std::pair<double, double> single_pair;
+  typedef std::vector<std::pair<double, double>> vector_of_pairs;
 
 } // end namespace
 
