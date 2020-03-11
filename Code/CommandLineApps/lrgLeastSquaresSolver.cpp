@@ -34,14 +34,31 @@ int main(int argc, char** argv)
   CLI::App app{"A program to perform Linear Regression."};
 
   std::string filename = "";
-  CLI::Option *filename_option = app.add_option("--file", filename, "Data file, space delimited x and y pairs, one pair per line.");
+  CLI::Option *filename_option = app.add_option("-f,--file", filename, "Data file, space delimited x and y pairs, one pair per line.");
   filename_option->check(CLI::ExistingFile);
   
   bool fake = false;
   CLI::Option *fake_option = app.add_option("--fake", fake, "Generate fake data.");
 
+  double fake_mean = 0.0;
+  CLI::Option *fake_mean_option = app.add_option("--fake_mean", fake_mean, "Fake noise mean.");
+  
+  double fake_sigma = 1.0;
+  CLI::Option *fake_sigma_option = app.add_option("--fake_sigma", fake_sigma, "Fake noise standard deviation.");
+
+  double fake_theta0 = 0.0;
+  CLI::Option *fake_theta0_option = app.add_option("--fake_theta0", fake_theta0, "Fake theta0.");
+  
+  double fake_theta1 = 1.0;
+  CLI::Option *fake_theta1_option = app.add_option("--fake_theta1", fake_theta1, "Fake theta1.");
+  
+  fake_option->needs(fake_mean_option);
+  fake_option->needs(fake_sigma_option);
+  fake_option->needs(fake_theta0_option);
+  fake_option->needs(fake_theta1_option);
+
+  
   filename_option->excludes(fake_option);
-  fake_option->excludes(filename_option);
 
   
 
@@ -69,13 +86,9 @@ int main(int argc, char** argv)
 
   if (fake == true) {
     // Noise generator.
-    double mean = 0.0;
-    double sigma = 1.0;
-    lrg::NormalDistributionNoise noise(mean, sigma);
+    lrg::NormalDistributionNoise noise(fake_mean, fake_sigma);
     // Linear data creator.
-    double theta0 = 0.0;
-    double theta1 = 1.0;
-    lrg::LinearDataCreator creator(theta0, theta1, noise);
+    lrg::LinearDataCreator creator(fake_theta0, fake_theta1, noise);
     data = creator.GetData();
   }
   else {
