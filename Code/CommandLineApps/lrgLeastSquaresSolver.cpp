@@ -33,10 +33,15 @@ int main(int argc, char** argv)
   
   CLI::App app{"A program to perform Linear Regression."};
 
-  std::string filename = "";
-  CLI::Option *filename_option = app.add_option("-f,--file", filename, "Data file, space delimited x and y pairs, one pair per line.");
-  filename_option->check(CLI::ExistingFile);
-  
+  std::string file = "";
+  CLI::Option *file_option = app.add_option("-f,--file", file, "Data file, space delimited x and y pairs, one pair per line.");
+  file_option->check(CLI::ExistingFile);
+
+  std::array<double, 4> rand {0.0, 1.0, 0.0, 1.0};
+  CLI::Option *rand_option = app.add_option("-r,--rand", rand, "Random data generation [theta0, theta1, noise_mean, noise_sigma].");
+
+
+  /*
   bool fake = false;
   CLI::Option *fake_option = app.add_option("--fake", fake, "Generate fake data.");
 
@@ -56,9 +61,9 @@ int main(int argc, char** argv)
   fake_option->needs(fake_sigma_option);
   fake_option->needs(fake_theta0_option);
   fake_option->needs(fake_theta1_option);
-
+  */
   
-  filename_option->excludes(fake_option);
+  file_option->excludes(rand_option);
 
   
 
@@ -84,17 +89,17 @@ int main(int argc, char** argv)
 
   lrg::vector_of_pairs data;
 
-  if (fake == true) {
+  if (file == "") {
     // Noise generator.
-    lrg::NormalDistributionNoise noise(fake_mean, fake_sigma);
+    lrg::NormalDistributionNoise noise(rand[2], rand[3]);
     // Linear data creator.
-    lrg::LinearDataCreator creator(fake_theta0, fake_theta1, noise);
+    lrg::LinearDataCreator creator(rand[0], rand[1], noise);
     data = creator.GetData();
   }
   else {
     // Read data from a file wrapping IO operations in a try block.
     try {
-      lrg::FileLoaderDataCreator creator(filename);
+      lrg::FileLoaderDataCreator creator(file);
       data = creator.GetData();
     }
     catch (lrg::Exception& e) {
@@ -140,10 +145,10 @@ int main(int argc, char** argv)
   // Produce Gnuplot script.
   
   try {
-    std::fstream f ("LeastSquaresSolver.plt", std::fstream::out);
-    f << "set title " << "'Linear Regression of " << filename << "'" << std::endl;
+    std::fstream f ("lrgLeastSquaresSolver.plt", std::fstream::out);
+    f << "set title " << "'Linear Regression" << std::endl;
     f << "set terminal png size 1920,1080" << std::endl;
-    f << "set output " << "'LeastSquaresSolver.png'" << std::endl; 
+    f << "set output " << "'lrgLeastSquaresSolver.png'" << std::endl; 
     f << "set grid" << std::endl;
     f << "set xlabel 'x'" << std::endl;
     f << "set ylabel 'y'" << std::endl;
