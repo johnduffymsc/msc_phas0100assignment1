@@ -1,27 +1,6 @@
 PHAS0100Assignment1
 ------------------
 
-## TestData1.txt
-
-### CLI Output
-
-![TestData1.txt](CLIScreenshotTestData1.png)
-
-### Gnuplot Output
-
-![TestData1.txt](LeastSquaresSolver_TestData1.png)
-
-## TestData2.txt
-
-### CLI Output
-
-![TestData2.txt](CLIScreenshotTestData2.png)
-
-### Gnuplot Output
-
-![TestData2.txt](LeastSquaresSolver_TestData2.png)
-
-
 Purpose
 -------
 Coursework 1 by John Duffy for PHAS0100 Research Computing with C++ 2019/2020 at UCL.
@@ -35,6 +14,12 @@ The method used to solve the linear regression is one of 'normal_equations' or '
 The program returns the intercept and gradient (theta0 and theta1) of the linear regression.
 
 Additionally, the program generates a Gnuplot script which can be used to generate a PNG plot of the data and resultant regression line. This can be viewed easily from the command line using the Eye of GNOME command, eog, or a similar image viewer. It is not necessary to install Gnuplot to perform the Linear Regression or produce the script, only to produce the PNG plot.
+
+
+Evidence of Correct Functionality
+---------------------------------
+
+![](lrgLeastSquaresSolver-Evidence.png)
 
 
 Installation and Build Instructions
@@ -109,3 +94,49 @@ To easily view the plot from the command line using Eye of GNOME:
 ```
 eog lrgLeastSquaresSolver.png
 ```
+
+Examples
+--------
+
+From the PHAS0100Assignment1-Build/bin directory:
+
+```
+lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData1.txt --solver 'normal_equations'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+![](lrgLeastSquaresSolver-TestData1-NormalEquations.png)
+
+
+```
+lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData1.txt --solver 'gradient_descent'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+![](lrgLeastSquaresSolver-TestData1-GradientDescent.png)
+
+
+```
+lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData2.txt --solver 'normal_equations'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+![](lrgLeastSquaresSolver-TestData2-NormalEquations.png)
+
+
+```
+lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData2.txt --solver 'gradient_descent'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+![](lrgLeastSquaresSolver-TestData2-GradientDescent.png)
+
+
+```
+lrgLeastSquaresSolver --rand 10.0 0.0 0.0 3.0 --solver 'normal_equations'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+![](lrgLeastSquaresSolver-Rand-10-0-0-3-NormalEquations.png)
+
+

@@ -34,41 +34,17 @@ int main(int argc, char** argv)
   CLI::App app{"A program to perform Linear Regression."};
 
   std::string file = "";
-  CLI::Option *file_option = app.add_option("-f,--file", file, "Data file, space delimited x and y pairs, one pair per line.");
+  CLI::Option *file_option = app.add_option("-f,--file", file, "Data file, space delimited x and y pairs, one pair per line");
   file_option->check(CLI::ExistingFile);
 
   std::array<double, 4> rand {0.0, 1.0, 0.0, 1.0};
-  CLI::Option *rand_option = app.add_option("-r,--rand", rand, "Random data generation [theta0, theta1, noise_mean, noise_sigma].");
+  CLI::Option *rand_option = app.add_option("-r,--rand", rand, "Random data generation, e.g. --rand theta0 theta1 noise_mean noise_sigma");
 
-
-  /*
-  bool fake = false;
-  CLI::Option *fake_option = app.add_option("--fake", fake, "Generate fake data.");
-
-  double fake_mean = 0.0;
-  CLI::Option *fake_mean_option = app.add_option("--fake_mean", fake_mean, "Fake noise mean.");
-  
-  double fake_sigma = 1.0;
-  CLI::Option *fake_sigma_option = app.add_option("--fake_sigma", fake_sigma, "Fake noise standard deviation.");
-
-  double fake_theta0 = 0.0;
-  CLI::Option *fake_theta0_option = app.add_option("--fake_theta0", fake_theta0, "Fake theta0.");
-  
-  double fake_theta1 = 1.0;
-  CLI::Option *fake_theta1_option = app.add_option("--fake_theta1", fake_theta1, "Fake theta1.");
-  
-  fake_option->needs(fake_mean_option);
-  fake_option->needs(fake_sigma_option);
-  fake_option->needs(fake_theta0_option);
-  fake_option->needs(fake_theta1_option);
-  */
-  
   file_option->excludes(rand_option);
-
-  
+  rand_option->excludes(file_option);
 
   std::string solver = "";
-  CLI::Option *solver_option = app.add_option("-s,--solver", solver, "Solver to perform linear regression.");
+  CLI::Option *solver_option = app.add_option("-s,--solver", solver, "Solver to perform linear regression");
   solver_option->check(CLI::IsMember({"normal_equations", "gradient_descent"}));
   solver_option->required();
   
@@ -139,8 +115,8 @@ int main(int argc, char** argv)
   // Print result.
   //
 
-  std::cout << "theta0: " << theta.first << std::endl;
-  std::cout << "theta1: " << theta.second << std::endl;
+  std::cout << std::setprecision (16) << "theta0: " << theta.first << std::endl;
+  std::cout << std::setprecision (16) << "theta1: " << theta.second << std::endl;
 
   // Produce Gnuplot script.
   
