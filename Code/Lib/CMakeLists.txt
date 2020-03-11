@@ -16,7 +16,6 @@ set(PHAS0100ASSIGNMENT1_LIBRARY_NAME phas0100assignment1)
 
 set(PHAS0100ASSIGNMENT1_LIBRARY_SRCS
   lrgBasicTypes.cpp
-  lrgMyFunctions.cpp
   lrgException.cpp
   lrgNormalDistributionNoise.cpp
   lrgLinearDataCreator.cpp

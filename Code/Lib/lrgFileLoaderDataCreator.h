@@ -17,6 +17,7 @@
 
 #include "lrgDataCreatorI.h"
 
+#include <fstream>
 #include <string>
 
 
@@ -24,12 +25,11 @@ namespace lrg {
   
   class FileLoaderDataCreator : public DataCreatorI {
   public:
-    FileLoaderDataCreator();
-    FileLoaderDataCreator(const std::string filename);
-    ~FileLoaderDataCreator();
+    FileLoaderDataCreator(const std::string& filename);  // RAII, see .cpp
+    ~FileLoaderDataCreator();  // RAII, see .cpp
     vector_of_pairs GetData();
   private:
-    const std::string filename_;
+    std::fstream file_;
   };
 
 } // end namespace

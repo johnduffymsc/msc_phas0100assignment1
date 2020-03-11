@@ -13,7 +13,6 @@
 #============================================================================*/
 
 set(_command_line_apps
-  lrgMyFirstApp
   lrgLeastSquaresSolver
 )
 

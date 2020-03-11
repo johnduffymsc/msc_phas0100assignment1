@@ -108,8 +108,18 @@ TEST_CASE("Test LinearDataCreator, y = 1.0 with noise", "[LinearDataCreator]")
 //
 
 
+//TEST_CASE("Test FileLoaderDataCreator exception due to empty filename", "[FileLoaderDataCreator]") {
+//  REQUIRE_THROWS(lrg::FileLoaderDataCreator creator(""));
+//}
+
+
+//TEST_CASE("Test FileLoaderDataCreator exception due to file not found", "[FileLoaderDataCreator]") {
+//  REQUIRE_THROWS(lrg::FileLoaderDataCreator creator("Blah.txt"));
+//}
+
+
 TEST_CASE("Test FileLoaderDataCreator constructor", "[FileLoaderDataCreator]") {
-  lrg::FileLoaderDataCreator creator;
+  lrg::FileLoaderDataCreator creator("TestData1.txt");
   REQUIRE(typeid(creator) == typeid(lrg::FileLoaderDataCreator));
 }
 
