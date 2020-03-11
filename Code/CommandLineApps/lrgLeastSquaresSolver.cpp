@@ -14,6 +14,7 @@
 
 #include <lrgExceptionMacro.h>
 #include <lrgLinearDataCreator.h>
+#include <lrgNormalDistributionNoise.h>
 #include <lrgFileLoaderDataCreator.h>
 #include <lrgNormalEquationSolverStrategy.h>
 #include <lrgGradientDescentSolverStrategy.h>
@@ -70,17 +71,17 @@ int main(int argc, char** argv)
     // Noise generator.
     double mean = 0.0;
     double sigma = 1.0;
-    lrg::NoiseGenerator noise(mean, sigma);
+    lrg::NormalDistributionNoise noise(mean, sigma);
     // Linear data creator.
     double theta0 = 0.0;
     double theta1 = 1.0;
-    lrg::LinearDataCreator creator(theta0, theta1, &noise);
+    lrg::LinearDataCreator creator(theta0, theta1, noise);
     data = creator.GetData();
   }
   else {
     // Read data from a file wrapping IO operations in a try block.
     try {
-      lrg::FileLoaderDataCreator creator (filename);
+      lrg::FileLoaderDataCreator creator(filename);
       data = creator.GetData();
     }
     catch (lrg::Exception& e) {

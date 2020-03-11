@@ -14,6 +14,7 @@
 
 #include "catch.hpp"
 #include "lrgCatchMain.h"
+#include "lrgNormalDistributionNoise.h"
 #include "lrgLinearDataCreator.h"
 #include "lrgFileLoaderDataCreator.h"
 #include "lrgNormalEquationSolverStrategy.h"
@@ -29,24 +30,24 @@
 //
 
 
-TEST_CASE("Test NoiseGenerator constructor.", "[NoiseGenerator]") {
+TEST_CASE("Test NormalDistributionNoise constructor.", "[NormalDistributionNoise]") {
 
-  // Create noise generator instance.
+  // Create NormalDistributionNoise instance.
 
-  lrg::NoiseGenerator noise(0.0, 1.0);
+  lrg::NormalDistributionNoise noise(0.0, 1.0);  // Mean: 0.0, Standard Deviation: 1.0.
   
   // Test for the correct type.
   
-  REQUIRE(typeid(noise) == typeid(lrg::NoiseGenerator));
+  REQUIRE(typeid(noise) == typeid(lrg::NormalDistributionNoise));
 
 }
 
 
-TEST_CASE("Test NoiseGenerator output #1", "[NoiseGenerator]") {
+TEST_CASE("Test NormalDistributionNoise output #1", "[NormalDistributionNoise]") {
 
-  // Create noise generator instance.
+  // Create NormalDistributionNoise instance.
 
-  lrg::NoiseGenerator noise(0.0, 1.0);  // Mean: 0.0, Standard Deviation: 1.0.
+  lrg::NormalDistributionNoise noise(0.0, 1.0);  // Mean: 0.0, Standard Deviation: 1.0.
 
   // Generate some noise.
 
@@ -64,11 +65,11 @@ TEST_CASE("Test NoiseGenerator output #1", "[NoiseGenerator]") {
 }
 
 
-TEST_CASE("Test NoiseGenerator output #2", "[NoiseGenerator]") {
+TEST_CASE("Test NormalDistributionNoise output #2", "[NormalDistributionNoise]") {
 
-  // Create noise generator instance.
+  // Create NormalDistributionNoise instance.
 
-  lrg::NoiseGenerator noise(1.0, 1.0);  // Mean: 1.0, Standard Deviation: 1.0.
+  lrg::NormalDistributionNoise noise(1.0, 1.0);  // Mean: 1.0, Standard Deviation: 1.0.
 
   // Generate some noise.
 
@@ -92,13 +93,13 @@ TEST_CASE("Test NoiseGenerator output #2", "[NoiseGenerator]") {
 
 TEST_CASE("Test LinearDataCreator constructor", "[LinearDataCreator]") {
 
-  // Create NoiseGenerator instance (previously tested).
+  // Create NormalDistributionNoise instance (previously tested).
 
-  lrg::NoiseGenerator noise(0.0, 0.0);  // no noise.
+  lrg::NormalDistributionNoise noise(0.0, 0.0);  // no noise.
 
   // Create LinearDataCreatorInstance.
 
-  lrg::LinearDataCreator creator(0.0, 1.0, &noise);  // y = x, no noise. 
+  lrg::LinearDataCreator creator(0.0, 1.0, noise);  // y = x, no noise. 
 
   // Test for the correct type.
 
@@ -109,13 +110,13 @@ TEST_CASE("Test LinearDataCreator constructor", "[LinearDataCreator]") {
 
 TEST_CASE("Test LinearDataCreator, y = x without noise", "[LinearDataCreator]") {
 
-  // Create NoiseGenerator instance (previously tested).
+  // Create NormalDistributionNoise instance (previously tested).
 
-  lrg::NoiseGenerator noise(0.0, 0.0);  // no noise.
+  lrg::NormalDistributionNoise noise(0.0, 0.0);  // no noise.
 
   // Create LinearDataCreatorInstance.
 
-  lrg::LinearDataCreator creator(0.0, 1.0, &noise);  // y = x. 
+  lrg::LinearDataCreator creator(0.0, 1.0, noise);  // y = x. 
 
   // Create data.
 
@@ -138,13 +139,13 @@ TEST_CASE("Test LinearDataCreator, y = x without noise", "[LinearDataCreator]") 
 
 TEST_CASE("Test LinearDataCreator, y = 1.0 with noise", "[LinearDataCreator]") {
 
-  // Create NoiseGenerator instance (previously tested).
+  // Create NormalDistributionNoise instance (previously tested).
 
-  lrg::NoiseGenerator noise(0.0, 1.0);  // Mean: 0.0, Standard Deviation: 1.0.
+  lrg::NormalDistributionNoise noise(0.0, 1.0);  // Mean: 0.0, Standard Deviation: 1.0.
 
   // Create LinearDataCreatorInstance.
 
-  lrg::LinearDataCreator creator(1.0, 0.0, &noise);  // y = 1. 
+  lrg::LinearDataCreator creator(1.0, 0.0, noise);  // y = 1. 
 
   // Create data.
 

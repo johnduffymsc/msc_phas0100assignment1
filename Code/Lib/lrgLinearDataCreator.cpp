@@ -14,23 +14,13 @@
 
 #include "lrgLinearDataCreator.h"
 
+#include <memory>
+
 
 namespace lrg {
 
-  NoiseGenerator::NoiseGenerator(const double mean, const double sigma)
-    : noise_(mean, sigma) {};
-
-  NoiseGenerator::~NoiseGenerator() {};
-
-  double NoiseGenerator::GetNumber() {
-
-    return noise_(generator_);
-
-  };
-  
-  
-  LinearDataCreator::LinearDataCreator(const double theta0, const double theta1, NoiseGenerator *noise_generator_ptr)
-    : theta0_(theta0), theta1_(theta1), noise_generator_(noise_generator_ptr) {};
+  LinearDataCreator::LinearDataCreator(const double theta0, const double theta1, NormalDistributionNoise noise)
+    : theta0_(theta0), theta1_(theta1), noise_(std::make_unique<NormalDistributionNoise>(noise)) {};
 
   LinearDataCreator::~LinearDataCreator() {};
   
@@ -40,7 +30,7 @@ namespace lrg {
 
     for (int x = 0; x < data.size(); ++x) {
       data[x].first = x;
-      data[x].second = theta0_ + theta1_ * x + noise_generator_->GetNumber();
+      data[x].second = theta0_ + theta1_ * x + noise_->GetNumber();
     }
     
     return data;
