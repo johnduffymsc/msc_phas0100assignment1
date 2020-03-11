@@ -18,6 +18,7 @@ set(PHAS0100ASSIGNMENT1_LIBRARY_SRCS
   lrgBasicTypes.cpp
   lrgMyFunctions.cpp
   lrgException.cpp
+  lrgNormalDistributionNoise.cpp
   lrgLinearDataCreator.cpp
   lrgFileLoaderDataCreator.cpp
   lrgNormalEquationSolverStrategy.cpp
@@ -26,6 +27,7 @@ set(PHAS0100ASSIGNMENT1_LIBRARY_SRCS
 
 set(PHAS0100ASSIGNMENT1_LIBRARY_HDRS
   lrgExceptionMacro.h
+  lrgNoiseGeneratorI.h
   lrgDataCreatorI.h
   lrgLinearModelSolverStrategyI.h
 )

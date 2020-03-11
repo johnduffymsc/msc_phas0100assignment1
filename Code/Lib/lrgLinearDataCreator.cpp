@@ -14,74 +14,27 @@
 
 #include "lrgLinearDataCreator.h"
 
-#include <random>
+#include <memory>
 
 
 namespace lrg {
-  
-  // Constructors.
 
-  LinearDataCreator::LinearDataCreator() : theta0_(0.0), theta1_(1.0) {};
-  
-  LinearDataCreator::LinearDataCreator(const double theta0, const double theta1) : theta0_(theta0), theta1_(theta1) {};
-
-
-  // Destructor.
+  LinearDataCreator::LinearDataCreator(const double theta0, const double theta1, NormalDistributionNoise noise)
+    : theta0_(theta0), theta1_(theta1), noise_(std::make_unique<NormalDistributionNoise>(noise)) {};
 
   LinearDataCreator::~LinearDataCreator() {};
   
-  
-  // LinearDataCreator::GetData().
-  
   vector_of_pairs LinearDataCreator::GetData() {
 
-    // Create the vector to be returned from this function.
-
-    vector_of_pairs  data (10);
-
-    // Create a random noise generator from the normal distribution.
-    
-    std::default_random_engine generator;
-    std::normal_distribution<double> noise(0.0, 1.0);
-
-    // Generate the data.
+    vector_of_pairs data(1000);  // TODO(John): Declare 1000 as a constant somewhere.
 
     for (int x = 0; x < data.size(); ++x) {
       data[x].first = x;
-      data[x].second = theta1_ * x + theta0_ + noise(generator);
+      data[x].second = theta0_ + theta1_ * x + noise_->GetNumber();
     }
     
-    // Return the vector.
-
     return data;
 
-  }
-
-
-  // LinearDataCreator::GetData(const int n).
-  
-  vector_of_pairs LinearDataCreator::GetData(const int n) {
-
-    // Create the vector to be returned from this function.
-
-    vector_of_pairs data (n);
-
-    // Create a random noise generator from the normal distribution.
-    
-    std::default_random_engine generator;
-    std::normal_distribution<double> noise(0.0, 1.0);
-
-    // Generate the data.
-
-    for (int x = 0; x < data.size(); ++x) {
-      data[x].first = x;
-      data[x].second = theta1_ * x + theta0_ + noise(generator);
-    }
-    
-    // Return the vector.
-
-    return data;
-
-  }
+  };
 
 } // end namespace

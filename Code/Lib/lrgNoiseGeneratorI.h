@@ -12,27 +12,15 @@
 
 =============================================================================*/
 
-#ifndef lrgLinearDataCreator_h
-#define lrgLinearDataCreator_h
-
-#include "lrgDataCreatorI.h"
-#include "lrgNormalDistributionNoise.h"
-
-#include <memory>
+#ifndef lrgNoiseGeneratorI_h
+#define lrgNoiseGeneratorI_h
 
 
 namespace lrg {
 
-  class LinearDataCreator : public DataCreatorI {
+  class NoiseGeneratorI {
   public:
-    LinearDataCreator(const double theta0, const double theta1, NormalDistributionNoise noise);
-    ~LinearDataCreator();
-    vector_of_pairs GetData();
-  private:
-    const double theta0_;
-    const double theta1_;
-    // LinearDataCreator HAS-A NoiseGenerator.
-    std::unique_ptr<NormalDistributionNoise> noise_;  // Take ownership.
+    virtual double GetNumber() = 0;
   };
 
 } // end namespace

@@ -13,12 +13,15 @@
 =============================================================================*/
 
 #include <lrgExceptionMacro.h>
+#include <lrgLinearDataCreator.h>
+#include <lrgNormalDistributionNoise.h>
 #include <lrgFileLoaderDataCreator.h>
 #include <lrgNormalEquationSolverStrategy.h>
 #include <lrgGradientDescentSolverStrategy.h>
 
 #include <CLI/CLI.hpp>
 
+#include <array>
 #include <iostream>
 
 
@@ -31,13 +34,18 @@ int main(int argc, char** argv)
   
   CLI::App app{"A program to perform Linear Regression."};
 
-  std::string filename = "";
-  CLI::Option *filename_option = app.add_option("-f,--file", filename, "Data file, space delimited x and y pairs, one pair per line.");
-  filename_option->check(CLI::ExistingFile);
-  filename_option->required();
-  
+  std::string file = "";
+  CLI::Option *file_option = app.add_option("-f,--file", file, "Data file, space delimited x and y pairs, one pair per line");
+  file_option->check(CLI::ExistingFile);
+
+  std::array<double, 4> rand {0.0, 1.0, 0.0, 1.0};
+  CLI::Option *rand_option = app.add_option("-r,--rand", rand, "Random data generation, e.g. --rand theta0 theta1 noise_mean noise_sigma");
+
+  file_option->excludes(rand_option);
+  rand_option->excludes(file_option);
+
   std::string solver = "";
-  CLI::Option *solver_option = app.add_option("-s,--solver", solver, "Solver to perform linear regression.");
+  CLI::Option *solver_option = app.add_option("-s,--solver", solver, "Solver to perform linear regression");
   solver_option->check(CLI::IsMember({"normal_equations", "gradient_descent"}));
   solver_option->required();
   
@@ -58,14 +66,17 @@ int main(int argc, char** argv)
 
   lrg::vector_of_pairs data;
 
-  if (filename == "") {
-    // Generate random data.
-    ;
+  if (file == "") {
+    // Noise generator.
+    lrg::NormalDistributionNoise noise(rand[2], rand[3]);
+    // Linear data creator.
+    lrg::LinearDataCreator creator(rand[0], rand[1], noise);
+    data = creator.GetData();
   }
   else {
     // Read data from a file wrapping IO operations in a try block.
     try {
-      lrg::FileLoaderDataCreator creator (filename);
+      lrg::FileLoaderDataCreator creator(file);
       data = creator.GetData();
     }
     catch (lrg::Exception& e) {
@@ -105,16 +116,16 @@ int main(int argc, char** argv)
   // Print result.
   //
 
-  std::cout << "theta0: " << theta.first << std::endl;
-  std::cout << "theta1: " << theta.second << std::endl;
+  std::cout << std::setprecision (16) << "theta0: " << theta.first << std::endl;
+  std::cout << std::setprecision (16) << "theta1: " << theta.second << std::endl;
 
   // Produce Gnuplot script.
   
   try {
-    std::fstream f ("LeastSquaresSolver.plt", std::fstream::out);
-    f << "set title " << "'Linear Regression of " << filename << "'" << std::endl;
+    std::fstream f ("lrgLeastSquaresSolver.plt", std::fstream::out);
+    f << "set title " << "'Linear Regression" << std::endl;
     f << "set terminal png size 1920,1080" << std::endl;
-    f << "set output " << "'LeastSquaresSolver.png'" << std::endl; 
+    f << "set output " << "'lrgLeastSquaresSolver.png'" << std::endl; 
     f << "set grid" << std::endl;
     f << "set xlabel 'x'" << std::endl;
     f << "set ylabel 'y'" << std::endl;
