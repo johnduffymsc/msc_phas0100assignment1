@@ -21,6 +21,7 @@
 
 #include <CLI/CLI.hpp>
 
+#include <array>
 #include <iostream>
 
 
