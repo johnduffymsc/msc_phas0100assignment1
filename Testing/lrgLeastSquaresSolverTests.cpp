@@ -25,55 +25,147 @@
 
 
 //
+// Noise Generator Tests.
+//
+
+
+TEST_CASE("Test NoiseGenerator constructor.", "[NoiseGenerator]") {
+
+  // Create noise generator instance.
+
+  lrg::NoiseGenerator noise(0.0, 1.0);
+  
+  // Test for the correct type.
+  
+  REQUIRE(typeid(noise) == typeid(lrg::NoiseGenerator));
+
+}
+
+
+TEST_CASE("Test NoiseGenerator output #1", "[NoiseGenerator]") {
+
+  // Create noise generator instance.
+
+  lrg::NoiseGenerator noise(0.0, 1.0);  // Mean: 0.0, Standard Deviation: 1.0.
+
+  // Generate some noise.
+
+  int n = 1000;
+  double sum = 0.0;
+  
+  for (auto i = 0; i < n; ++i) {
+    sum += noise.GetNumber();
+  }
+  
+  // We should reasonably expect the mean of this to be 0.0.
+
+  REQUIRE(round(sum / n) == 0.0);
+
+}
+
+
+TEST_CASE("Test NoiseGenerator output #2", "[NoiseGenerator]") {
+
+  // Create noise generator instance.
+
+  lrg::NoiseGenerator noise(1.0, 1.0);  // Mean: 1.0, Standard Deviation: 1.0.
+
+  // Generate some noise.
+
+  int n = 1000;
+  double sum = 0.0;
+  
+  for (auto i = 0; i < n; ++i) {
+    sum += noise.GetNumber();
+  }
+  
+  // We should reasonably expect the mean of this to be 1.0.
+
+  REQUIRE(round(sum / n) == 1.0);
+
+}
+
+
+//
 // Linear Data Creator Tests.
 //
 
-// Test the default constructor does actually construct an object of the correct type.
+TEST_CASE("Test LinearDataCreator constructor", "[LinearDataCreator]") {
 
-TEST_CASE("Test LinearDataCreator default constructor", "[LinearDataCreator]") {
-  lrg::LinearDataCreator LinearDataCreatorInstance;
-  REQUIRE(typeid(LinearDataCreatorInstance) == typeid(lrg::LinearDataCreator));
+  // Create NoiseGenerator instance (previously tested).
+
+  lrg::NoiseGenerator noise(0.0, 0.0);  // no noise.
+
+  // Create LinearDataCreatorInstance.
+
+  lrg::LinearDataCreator creator(0.0, 1.0, &noise);  // y = x, no noise. 
+
+  // Test for the correct type.
+
+  REQUIRE(typeid(creator) == typeid(lrg::LinearDataCreator));
+
 }
 
 
-// Test the non-default constructor does actually construct an object of the correct type.
+TEST_CASE("Test LinearDataCreator, y = x without noise", "[LinearDataCreator]") {
 
-TEST_CASE("Test LinearDataCreator non-default constructor", "[LinearDataCreator]") {
-  lrg::LinearDataCreator LinearDataCreatorInstance(1.0, 1.0);
-  REQUIRE(typeid(LinearDataCreatorInstance) == typeid(lrg::LinearDataCreator));
-}
+  // Create NoiseGenerator instance (previously tested).
 
+  lrg::NoiseGenerator noise(0.0, 0.0);  // no noise.
 
-// Test the LinearDataCreator default constructor and GetData() method.
+  // Create LinearDataCreatorInstance.
 
-TEST_CASE("Test GetData(): Default y = x, for x in [0, 9]", "[LinearDataCreator]") {
-  lrg::LinearDataCreator LinearDataCreatorInstance;
-  lrg::vector_of_pairs data = LinearDataCreatorInstance.GetData();
-  REQUIRE(data.size() == 10);
-  //REQUIRE(data[0] == std::pair<double, double>(0.0, 0.0));
-  //REQUIRE(data[9] == std::pair<double, double>(9.0, 9.0));
-}
+  lrg::LinearDataCreator creator(0.0, 1.0, &noise);  // y = x. 
 
+  // Create data.
 
-// Test the LinearDataCreator non-default constructor and GetData(n) method.
+  lrg::vector_of_pairs data;
 
-TEST_CASE("Test GetData(20): y = 1.0 + 2.0 * x, for x in [0, 19]", "[LinearDataCreator]") {
-  const double theta0 = 1.0;
-  const double theta1 = 2.0;
-  const int n = 20;
-  lrg::LinearDataCreator LinearDataCreatorInstance(theta0, theta1);
-  lrg::vector_of_pairs data = LinearDataCreatorInstance.GetData(n);
-  REQUIRE(data.size() == n);
+  data = creator.GetData();
 
-  std::fstream f;
-  f.open("GetData.txt", std::fstream::out);
-  for (auto item : data) {
-    f << item.first << " " << item.second << std::endl;
-  }
-  f.close();
+  // Test for correct values being careful of floating point comparisons.
+
+  REQUIRE(data.size() == 1000);
+ 
+  REQUIRE(round(data[0].first) == 0.0);
+  REQUIRE(round(data[0].second) == 0.0);
   
-  //REQUIRE(data[0] == std::pair<double, double>(0.0, theta0));
-  //REQUIRE(data[n - 1] == std::pair<double, double>(n - 1, theta0 + theta1 * (n - 1)));
+  REQUIRE(round(data[999].first) == 999.0);
+  REQUIRE(round(data[999].second) == 999.0);
+  
+}
+
+
+TEST_CASE("Test LinearDataCreator, y = 1.0 with noise", "[LinearDataCreator]") {
+
+  // Create NoiseGenerator instance (previously tested).
+
+  lrg::NoiseGenerator noise(0.0, 1.0);  // Mean: 0.0, Standard Deviation: 1.0.
+
+  // Create LinearDataCreatorInstance.
+
+  lrg::LinearDataCreator creator(1.0, 0.0, &noise);  // y = 1. 
+
+  // Create data.
+
+  lrg::vector_of_pairs data;
+
+  data = creator.GetData();
+
+  // Test for correct values being careful of floating point comparisons.
+
+  REQUIRE(data.size() == 1000);
+
+  double sum = 0.0;
+  
+  for (auto i = 0; i < data.size(); ++i) {
+    sum += data[i].second;  // Sum y values.
+  }
+
+  // It is reasonable to expect the mean of the y values to be 1.0.
+
+  REQUIRE(round(sum / data.size()) == 1.0);
+  
 }
 
 

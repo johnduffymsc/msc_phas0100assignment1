@@ -14,74 +14,37 @@
 
 #include "lrgLinearDataCreator.h"
 
-#include <random>
-
 
 namespace lrg {
+
+  NoiseGenerator::NoiseGenerator(const double mean, const double sigma)
+    : noise_(mean, sigma) {};
+
+  NoiseGenerator::~NoiseGenerator() {};
+
+  double NoiseGenerator::GetNumber() {
+
+    return noise_(generator_);
+
+  };
   
-  // Constructors.
-
-  LinearDataCreator::LinearDataCreator() : theta0_(0.0), theta1_(1.0) {};
   
-  LinearDataCreator::LinearDataCreator(const double theta0, const double theta1) : theta0_(theta0), theta1_(theta1) {};
-
-
-  // Destructor.
+  LinearDataCreator::LinearDataCreator(const double theta0, const double theta1, NoiseGenerator *noise_generator_ptr)
+    : theta0_(theta0), theta1_(theta1), noise_generator_(noise_generator_ptr) {};
 
   LinearDataCreator::~LinearDataCreator() {};
   
-  
-  // LinearDataCreator::GetData().
-  
   vector_of_pairs LinearDataCreator::GetData() {
 
-    // Create the vector to be returned from this function.
-
-    vector_of_pairs  data (10);
-
-    // Create a random noise generator from the normal distribution.
-    
-    std::default_random_engine generator;
-    std::normal_distribution<double> noise(0.0, 1.0);
-
-    // Generate the data.
+    vector_of_pairs data(1000);  // TODO(John): Declare 1000 as a constant somewhere.
 
     for (int x = 0; x < data.size(); ++x) {
       data[x].first = x;
-      data[x].second = theta1_ * x + theta0_ + noise(generator);
+      data[x].second = theta0_ + theta1_ * x + noise_generator_->GetNumber();
     }
     
-    // Return the vector.
-
     return data;
 
-  }
-
-
-  // LinearDataCreator::GetData(const int n).
-  
-  vector_of_pairs LinearDataCreator::GetData(const int n) {
-
-    // Create the vector to be returned from this function.
-
-    vector_of_pairs data (n);
-
-    // Create a random noise generator from the normal distribution.
-    
-    std::default_random_engine generator;
-    std::normal_distribution<double> noise(0.0, 1.0);
-
-    // Generate the data.
-
-    for (int x = 0; x < data.size(); ++x) {
-      data[x].first = x;
-      data[x].second = theta1_ * x + theta0_ + noise(generator);
-    }
-    
-    // Return the vector.
-
-    return data;
-
-  }
+  };
 
 } // end namespace

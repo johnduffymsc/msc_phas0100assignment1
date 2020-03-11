@@ -13,6 +13,7 @@
 =============================================================================*/
 
 #include <lrgExceptionMacro.h>
+#include <lrgLinearDataCreator.h>
 #include <lrgFileLoaderDataCreator.h>
 #include <lrgNormalEquationSolverStrategy.h>
 #include <lrgGradientDescentSolverStrategy.h>
@@ -32,10 +33,17 @@ int main(int argc, char** argv)
   CLI::App app{"A program to perform Linear Regression."};
 
   std::string filename = "";
-  CLI::Option *filename_option = app.add_option("-f,--file", filename, "Data file, space delimited x and y pairs, one pair per line.");
+  CLI::Option *filename_option = app.add_option("--file", filename, "Data file, space delimited x and y pairs, one pair per line.");
   filename_option->check(CLI::ExistingFile);
-  filename_option->required();
   
+  bool fake = false;
+  CLI::Option *fake_option = app.add_option("--fake", fake, "Generate fake data.");
+
+  filename_option->excludes(fake_option);
+  fake_option->excludes(filename_option);
+
+  
+
   std::string solver = "";
   CLI::Option *solver_option = app.add_option("-s,--solver", solver, "Solver to perform linear regression.");
   solver_option->check(CLI::IsMember({"normal_equations", "gradient_descent"}));
@@ -58,9 +66,16 @@ int main(int argc, char** argv)
 
   lrg::vector_of_pairs data;
 
-  if (filename == "") {
-    // Generate random data.
-    ;
+  if (fake == true) {
+    // Noise generator.
+    double mean = 0.0;
+    double sigma = 1.0;
+    lrg::NoiseGenerator noise(mean, sigma);
+    // Linear data creator.
+    double theta0 = 0.0;
+    double theta1 = 1.0;
+    lrg::LinearDataCreator creator(theta0, theta1, &noise);
+    data = creator.GetData();
   }
   else {
     // Read data from a file wrapping IO operations in a try block.
