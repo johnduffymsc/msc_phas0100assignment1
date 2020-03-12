@@ -20,25 +20,29 @@
 
 namespace lrg {
 
-  FileLoaderDataCreator::FileLoaderDataCreator() {};
+  //
+  // IO Exceptions to be caught and handled by caller.
+  //
   
-  FileLoaderDataCreator::FileLoaderDataCreator(const std::string filename) : filename_(filename) {};
+  FileLoaderDataCreator::FileLoaderDataCreator(const std::string& filename)
+  {
+    file_.open(filename, std::fstream::in);  // RAII      
+  };
+
   
-  FileLoaderDataCreator::~FileLoaderDataCreator() {};
+  FileLoaderDataCreator::~FileLoaderDataCreator()
+  {
+    file_.close();  // RAII
+  };
+
   
   vector_of_pairs FileLoaderDataCreator::GetData()
-  {
+  {  
     vector_of_pairs v;
     single_pair p;
 
-    try {
-      std::fstream f (filename_, std::fstream::in);
-      while (f >> p.first >> p.second) {
-	v.push_back(p);
-      }
-    } catch (std::exception e) {
-      // Catch and re-throw all exceptions. Let the caller decide what to do.
-      throw e;
+    while (file_ >> p.first >> p.second) {
+      v.push_back(p);
     }
 
     return v;

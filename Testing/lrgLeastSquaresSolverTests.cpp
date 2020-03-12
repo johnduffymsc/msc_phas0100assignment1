@@ -45,6 +45,7 @@ TEST_CASE("Test NormalDistributionNoise output #1", "[NormalDistributionNoise]")
   for (auto i = 0; i < n; ++i) {
     sum += noise.GetNumber();
   }
+  // Be careful of floating point comparisons.
   REQUIRE(round(sum / n) == 0.0);
 }
 
@@ -57,6 +58,7 @@ TEST_CASE("Test NormalDistributionNoise output #2", "[NormalDistributionNoise]")
   for (auto i = 0; i < n; ++i) {
     sum += noise.GetNumber();
   }
+  // Be careful of floating point comparisons.
   REQUIRE(round(sum / n) == 1.0);
 }
 
@@ -81,6 +83,7 @@ TEST_CASE("Test LinearDataCreator, y = x without noise", "[LinearDataCreator]")
   lrg::vector_of_pairs data;
   data = creator.GetData();
   REQUIRE(data.size() == 1000); 
+  // Be careful of floating point comparisons.
   REQUIRE(round(data[0].first) == 0.0);
   REQUIRE(round(data[0].second) == 0.0);
   REQUIRE(round(data[999].first) == 999.0);
@@ -99,6 +102,7 @@ TEST_CASE("Test LinearDataCreator, y = 1.0 with noise", "[LinearDataCreator]")
   for (auto i = 0; i < data.size(); ++i) {
     sum += data[i].second;  // Sum y values.
   }
+  // Be careful of floating point comparisons.
   REQUIRE(round(sum / data.size()) == 1.0);  
 }
 
@@ -108,8 +112,20 @@ TEST_CASE("Test LinearDataCreator, y = 1.0 with noise", "[LinearDataCreator]")
 //
 
 
+// TODO(John): Fix! A primary expression is required in the REQUIRE_THROWS(), ???
+//TEST_CASE("Test FileLoaderDataCreator exception due to file not found", "[FileLoaderDataCreator]") {
+//  REQUIRE_THROWS(lrg::FileLoaderDataCreator creator("Blah.txt"));
+//}
+
+
+// TODO(John): Fix! A primary expression is required in the REQUIRE_THROWS(), ???
+//TEST_CASE("Test FileLoaderDataCreator exception due to file not found", "[FileLoaderDataCreator]") {
+//  REQUIRE_THROWS(lrg::FileLoaderDataCreator creator("Blah.txt"));
+//}
+
+
 TEST_CASE("Test FileLoaderDataCreator constructor", "[FileLoaderDataCreator]") {
-  lrg::FileLoaderDataCreator creator;
+  lrg::FileLoaderDataCreator creator("TestData1.txt");
   REQUIRE(typeid(creator) == typeid(lrg::FileLoaderDataCreator));
 }
 
