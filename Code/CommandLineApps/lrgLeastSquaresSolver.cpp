@@ -21,8 +21,8 @@
 
 #include <CLI/CLI.hpp>
 
-#include <array>
 #include <iostream>
+#include <vector>
 
 
 int main(int argc, char** argv)
@@ -35,11 +35,12 @@ int main(int argc, char** argv)
   CLI::App app{"A program to perform Linear Regression."};
 
   std::string file = "";
-  CLI::Option *file_option = app.add_option("-f,--file", file, "Data file, space delimited x and y pairs, one pair per line");
+  CLI::Option *file_option = app.add_option("-f,--file", file, "Read data from a file, space delimited x and y pairs, one pair per line");
   file_option->check(CLI::ExistingFile);
 
-  std::array<double, 4> rand {0.0, 1.0, 0.0, 1.0};
-  CLI::Option *rand_option = app.add_option("-r,--rand", rand, "Random data generation, e.g. --rand theta0 theta1 noise_mean noise_sigma");
+  std::vector<double> rand {0.0, 1.0, 0.0, 1.0};
+  CLI::Option *rand_option = app.add_option("-r,--rand", rand, "Generate random data, e.g. --rand theta0 theta1 noise_mean noise_sigma");
+  rand_option->expected(4);
 
   file_option->excludes(rand_option);
   rand_option->excludes(file_option);
@@ -49,8 +50,13 @@ int main(int argc, char** argv)
   solver_option->check(CLI::IsMember({"normal_equations", "gradient_descent"}));
   solver_option->required();
   
+  std::vector<double> grad {5.0, 5.0, 1000.0, 0.1};
+  CLI::Option *grad_option = app.add_option("-g,--grad", grad, "Gradient Descent parameters, e.g. --grad x0 y0 max_iterations eta");
+  grad_option->expected(4);
+
   CLI11_PARSE(app, argc, argv);
 
+  
   // At this point we are guaranteed that:
   //
   // 1. filename_option is either (a) "", or (b) "filename_of_a_file_that_exists"
@@ -81,11 +87,9 @@ int main(int argc, char** argv)
     }
     catch (lrg::Exception& e) {
       std::cerr << "Caught lrg::Exception: " << e.GetDescription() << std::endl;
-    // TODO: return EXIT_FAILURE
     }
     catch (std::exception& e) {
       std::cerr << "Caught std::exception: " << e.what() << std::endl;
-    // TODO: return EXIT_FAILURE
     }
   }
   
@@ -103,10 +107,9 @@ int main(int argc, char** argv)
   }
   else {
     // Gradient Descent Solver.
-    // TODO: Parameterise the below...
-    const lrg::single_pair theta_zero (5.0, 5.0);
-    const int max_iterations = 1000;
-    const double eta = 0.1;
+    const lrg::single_pair theta_zero (grad[0], grad[1]);
+    const int max_iterations = grad[2];
+    const double eta = grad[3];
     lrg::GradientDescentSolverStrategy solver_strategy(theta_zero, max_iterations, eta);
     theta = solver_strategy.FitData(data);
   }
